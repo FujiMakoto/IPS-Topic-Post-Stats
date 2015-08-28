@@ -1,0 +1,29 @@
+<ips:template parameters="$stats, $topic" />
+<div{{if request.isAjax()}} class='cTopicHovercard'{{endif}}>
+	<div{{if request.isAjax()}} class='cTopicHovercard_container ipsScrollbar'{{endif}}>
+		<ul class="ipsDataList">
+			{{foreach $stats as $stat}}
+				<li class="ipsDataItem">
+					<div class='ipsDataItem_main ipsPhotoPanel ipsPhotoPanel_tiny ipsClearfix'>
+						{template="userPhoto" group="global" app="core" params="$stat['member'], 'tiny'"}
+						<div class='ipsType_small'>
+							<strong>{$stat['member']->name}</strong>
+							<p class='ipsType_reset ipsType_light ipsType_blendLinks'>
+								{datetime="$stat['date']"}
+							</p>
+						</div>
+					</div>
+					<div class="ipsDataItem_stats ipsDataItem_statsLarge">
+						<span class="ipsDataItem_stats_number">{$stat['total']}</span>
+						<span class="ipsDataItem_stats_type ipsType_light">{lang="posts_no_number" pluralize="$stat['total']"}</span>
+					</div>
+				</li>
+			{{endforeach}}
+		</ul>
+	</div>
+</div>
+{{if !request.isAjax()}}
+	<div class="ipsType_center">
+		<a class="ipsButton ipsButton_medium ipsButton_primary" href="{$topic->url()}">{lang="userTopicStats_goToTopic"}</a>
+	</div>
+{{endif}}
